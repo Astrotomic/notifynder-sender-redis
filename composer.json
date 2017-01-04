@@ -1,6 +1,6 @@
 {
-  "name": "astrotomic/notifynder-sender-slack",
-  "description": "Slack Sender for the Notifynder package.",
+  "name": "astrotomic/notifynder-sender-redis",
+  "description": "Redis Sender for the Notifynder package.",
   "keywords": ["notifications", "laravel"],
   "license": "MIT",
   "authors": [
