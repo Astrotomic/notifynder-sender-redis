@@ -65,12 +65,14 @@ class RedisSender implements SenderContract
         $category = $this->getCategoryName($notification->attribute('category_id'));
 
         $replacers = [
-            'type'=> $type,
+            'type'=> strtolower(class_basename($type)),
             'id'=> $id,
             'category'=> $category,
         ];
 
-        return preg_replace("|{(\w*)}|e", '$replacers["$1"]', $channel);
+        return preg_replace_callback("|{(\w*)}|", function ($hits) use ($replacers) {
+            return array_get($replacers, $hits[1]);
+        }, $channel);
     }
 
     /**
@@ -82,7 +84,7 @@ class RedisSender implements SenderContract
     protected function getCategoryName($categoryId)
     {
         if (! array_key_exists($categoryId, $this->categoryNames)) {
-            $this->categoryNames[$categoryId] = NotificationCategory::firstOrFail($categoryId)->name;
+            $this->categoryNames[$categoryId] = NotificationCategory::findOrFail($categoryId)->name;
         }
 
         return $this->categoryNames[$categoryId];
