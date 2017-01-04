@@ -2,11 +2,11 @@
 
 namespace Astrotomic\Notifynder\Senders;
 
+use Illuminate\Support\Facades\Redis;
 use Fenos\Notifynder\Builder\Notification;
 use Fenos\Notifynder\Contracts\SenderContract;
-use Fenos\Notifynder\Contracts\SenderManagerContract;
 use Fenos\Notifynder\Models\NotificationCategory;
-use Illuminate\Support\Facades\Redis;
+use Fenos\Notifynder\Contracts\SenderManagerContract;
 
 class RedisSender implements SenderContract
 {
@@ -69,6 +69,7 @@ class RedisSender implements SenderContract
             'id'=> $id,
             'category'=> $category,
         ];
+
         return preg_replace("|{(\w*)}|e", '$replacers["$1"]', $channel);
     }
 
@@ -80,7 +81,7 @@ class RedisSender implements SenderContract
      */
     protected function getCategoryName($categoryId)
     {
-        if(!array_key_exists($categoryId, $this->categoryNames)) {
+        if (! array_key_exists($categoryId, $this->categoryNames)) {
             $this->categoryNames[$categoryId] = NotificationCategory::firstOrFail($categoryId)->name;
         }
 
