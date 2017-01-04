@@ -1,0 +1,35 @@
+{
+  "name": "astrotomic/notifynder-sender-slack",
+  "description": "Slack Sender for the Notifynder package.",
+  "keywords": ["notifications", "laravel"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabrizio Fenoglio",
+      "email": "fabri_feno@yahoo.it",
+      "role": "Developer"
+    },
+    {
+      "name": "Tom Witkowski",
+      "email": "dev.gummibeer@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "illuminate/support": "~5.1",
+    "fenos/notifynder": "^4.0",
+    "predis/predis": "^1.1"
+  },
+  "require-dev": {
+    "laravel/framework": "~5.1"
+  },
+  "autoload": {
+    "classmap": [
+
+    ],
+    "psr-4": {
+      "Astrotomic\\Notifynder\\": "src/Notifynder"
+    }
+  }
+}
