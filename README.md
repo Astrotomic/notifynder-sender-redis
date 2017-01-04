@@ -1,4 +1,4 @@
-# Notifynder 4 Slack Sender - Laravel 5
+# Notifynder 4 Redis Sender - Laravel 5
 
 [![GitHub release](https://img.shields.io/github/release/astrotomic/notifynder-sender-redis.svg?style=flat-square)](https://github.com/astrotomic/notifynder-sender-redis/releases)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/astrotomic/notifynder-sender-redis/master/LICENSE)
