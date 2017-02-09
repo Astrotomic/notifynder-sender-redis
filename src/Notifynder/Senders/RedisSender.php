@@ -2,7 +2,6 @@
 
 namespace Astrotomic\Notifynder\Senders;
 
-use Illuminate\Support\Facades\Redis;
 use Fenos\Notifynder\Builder\Notification;
 use Fenos\Notifynder\Contracts\SenderContract;
 use Fenos\Notifynder\Models\NotificationCategory;
@@ -18,6 +17,11 @@ class RedisSender implements SenderContract
     /**
      * @var array
      */
+    protected $config;
+
+    /**
+     * @var array
+     */
     protected $categoryNames = [];
 
     /**
@@ -28,6 +32,7 @@ class RedisSender implements SenderContract
     public function __construct(array $notifications)
     {
         $this->notifications = $notifications;
+        $this->config = notifynder_config('senders.redis');
     }
 
     /**
@@ -38,10 +43,10 @@ class RedisSender implements SenderContract
      */
     public function send(SenderManagerContract $sender)
     {
-        $store = config('notifynder.senders.redis.store', false);
+        $store = $this->config['store'];
         foreach ($this->notifications as $notification) {
             $channel = $this->parseChannel($notification);
-            Redis::publish($channel, $notification->toJson());
+            app('redis')->publish($channel, $notification->toJson());
         }
 
         if ($store) {
@@ -59,7 +64,7 @@ class RedisSender implements SenderContract
      */
     protected function parseChannel(Notification $notification)
     {
-        $channel = config('notifynder.senders.redis.channel');
+        $channel = $this->config['channel'];
         $type = $notification->attribute('to_type', notifynder_config()->getNotifiedModel());
         $id = $notification->attribute('to_id');
         $category = $this->getCategoryName($notification->attribute('category_id'));
